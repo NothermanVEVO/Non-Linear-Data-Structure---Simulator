@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
+import items.Fila;
 
 public class Main{
 
@@ -27,6 +28,8 @@ public class Main{
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
         window.setVisible(true);
+
+        GraphicsPanel.addGraphicItem(new Fila());
 
         gPanel.start();
 
