@@ -1,12 +1,12 @@
-package src;
+package items;
 
 import java.awt.Graphics2D;
 
-import engine.abstractclasses.GraphicsItemAuto;
+import engine.abstractclasses.GraphicsItem;
 import engine.util.Input;
 import engine.variables.Vector2;
 
-public class ZoomScale extends GraphicsItemAuto{
+public class ZoomScale extends GraphicsItem{
 
     private static Vector2 tlPosition = new Vector2();
     private static Vector2 tlPositionWhenReleased = new Vector2();
@@ -15,10 +15,10 @@ public class ZoomScale extends GraphicsItemAuto{
     private static Vector2 zoomSpeed = new Vector2(0.05, 0.05);
     private static Vector2 maxZoom = new Vector2(3, 3);
 
-
-    @Override
-    public void create() {
+    public ZoomScale(){
+        setZ(-100);
     }
+    
 
     @Override
     public void update(double deltaTime) {
