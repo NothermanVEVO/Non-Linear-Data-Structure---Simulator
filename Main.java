@@ -7,6 +7,7 @@ import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
 import items.Fila;
+import items.ZoomScale;
 
 public class Main{
 
@@ -26,8 +27,10 @@ public class Main{
         window.adjust();
         window.setVisible(true);
 
-        GraphicsPanel.addGraphicItem(new Fila());
 
+        GraphicsPanel.addGraphicItem(new ZoomScale());
+        GraphicsPanel.addGraphicItem(new Fila());
+        
         gPanel.start();
 
     }
