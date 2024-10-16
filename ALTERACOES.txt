@@ -1,8 +1,0 @@
-criei o metodo para pegar a largura e comprimento do GraphicsPanel DONE
-criei o metodo get para pegas as posiçoes do mouse DONE
-input agora está na classe do GraphicsPanel, nao mais no Window DONE
-Alteraçoes no GraphicsPanel e no Window para que todo o GraphicsPanel seja mostrado na Window DONE
-Create Input agora aceita null como parametro DONE
-Adicionado o metodo static negative dentro da classe Vector2 DONE
-Metodo da classe Vector2 antes chamava "is_different", agora chama "different" DONE
-Metodos da classe Vector2 greater, greater or equal, less, less or equal, agora da a comparacao de vetores nao paralelos e foram otimizadas DONE
