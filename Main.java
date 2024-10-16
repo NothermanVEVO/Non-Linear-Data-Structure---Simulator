@@ -14,12 +14,9 @@ public class Main{
     static GraphicsPanel gPanel;
 
     public static void main(String[] args) {
-
-        Input.createNewAction("Move Up", new int[]{KeyEvent.VK_W, KeyEvent.VK_UP}, new int[0], new int[]{Input.MOUSE_WHEEL_UP});
-        Input.createNewAction("Move Down", new int[]{KeyEvent.VK_S, KeyEvent.VK_DOWN}, new int[0], new int[]{Input.MOUSE_WHEEL_DOWN});
-        Input.createNewAction("Move Left", new int[]{KeyEvent.VK_A, KeyEvent.VK_LEFT}, new int[]{MouseEvent.BUTTON1}, new int[0]);
-        Input.createNewAction("Move Right", new int[]{KeyEvent.VK_D, KeyEvent.VK_RIGHT}, new int[]{MouseEvent.BUTTON3}, new int[0]);
         Input.createNewAction("Mouse 1", null, new int[]{MouseEvent.BUTTON1}, null);
+        Input.createNewAction("Zoom In", null, null, new int[]{Input.MOUSE_WHEEL_UP});
+        Input.createNewAction("Zoom Out", null, null, new int[]{Input.MOUSE_WHEEL_DOWN});
 
         window = Window.getInstance("P1 - Simulador - Estrutura de Dados Nao Lineares");
 
