@@ -27,7 +27,6 @@ public class Main{
         window.adjust();
         window.setVisible(true);
 
-
         GraphicsPanel.addGraphicItem(new ZoomScale());
         GraphicsPanel.addGraphicItem(new Fila());
         
