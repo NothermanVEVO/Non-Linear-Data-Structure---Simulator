@@ -10,8 +10,7 @@ public class Fila extends GraphicsItem{
 
     Vector2 piniuim = new Vector2();
 
-
-    
+    public Fila(){}
 
     @Override
     public void update(double deltaTime) {
