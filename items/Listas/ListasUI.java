@@ -1,7 +1,6 @@
 package items.Listas;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
@@ -12,43 +11,42 @@ import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
 import engine.util.Timer;
+import items.Control.Controller;
 
 public class ListasUI extends JPanel {
 
-    ListasItem listasItem = new ListasItem();
+    public static ListasItem listasItem = new ListasItem();
 
     private static final int SPACEMENT = 10;
 
-    JButton addButton = new JButton("Add");
-    JButton addAtButton = new JButton("Add At");
-    JButton setButton = new JButton("Set");
-    JButton removeButton = new JButton("Remove");
-    JButton removeAtButton = new JButton("Remove At");
-    JButton clearButton = new JButton("Clear");
-    JButton isEmptyButton = new JButton("Is Empty");
-    JButton getSizeButton = new JButton("Get Size");
+    private JButton addButton = new JButton("Add");
+    private JButton addAtButton = new JButton("Add At");
+    private JButton setButton = new JButton("Set");
+    private JButton removeButton = new JButton("Remove");
+    private JButton removeAtButton = new JButton("Remove At");
+    private JButton clearButton = new JButton("Clear");
+    private JButton isEmptyButton = new JButton("Is Empty");
+    private JButton getSizeButton = new JButton("Get Size");
+
+    private JButton returnButton = new JButton("Return");
 
     private static final int TEXT_FONT_SIZE = 30;
-    JLabel textLabel = new JLabel();
+    private JLabel textLabel = new JLabel();
     
     private static final double DISAPEAR_TIME = 5;
-    Timer disapearTimer = new Timer();
+    private Timer disapearTimer = new Timer();
 
     /*
      * //TODO NEVER GONNA GIVE YOU UP
-     * addAt
-     * isEmpty
-     * getSize
      */
 
     public ListasUI(){
 
-        GraphicsPanel.addGraphicItem(listasItem);
-
         disapearTimer.oneTime = true;
         disapearTimer.addListeners(() -> timeout());
 
-        setPreferredSize(new Dimension(GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight()));
+        setBounds(0, 0, GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight());
+        // setPreferredSize(new Dimension(GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight()));
         setOpaque(false);
         setLayout(null);
 
@@ -120,6 +118,11 @@ public class ListasUI extends JPanel {
         getSizeButton.setFocusPainted(false);
         getSizeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        add(returnButton);
+        returnButton.setSize(100, 50);
+        returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
+        returnButton.addActionListener(l -> buttonsListener(l));
+
     }
 
     private void buttonsListener(ActionEvent l){
@@ -168,6 +171,8 @@ public class ListasUI extends JPanel {
         } else if(l.getSource() == getSizeButton){
             textLabel.setText("O tamanho da lista é " + listasItem.lista.size() + ".");
             disapearTimer.start(DISAPEAR_TIME);
+        } else if(l.getSource() == returnButton){
+            Controller.returnToSelection();
         }
 
         if(listasItem.lista.isEmpty()){

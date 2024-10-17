@@ -1,5 +1,6 @@
 package items.Listas;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -26,9 +27,12 @@ public class ListasItem extends GraphicsItem{
     public void draw(Graphics2D g2) {
         for (int i = 0; i < lista.size(); i++) {
             position.x = (size.x * i) + SPACEMENT * (i + 1);
+            g2.setColor(Color.BLACK);
             g2.drawString("index: " + Integer.toString(i), (int) position.x, (int) (position.y - 2));
-            g2.fillRect((int) position.x, (int) position.y, (int) size.x, (int) size.y);
             g2.drawString("valor: " + lista.get(i), (int) position.x, (int) (position.y + size.y + SPACEMENT));
+            g2.setColor(Color.DARK_GRAY);
+            g2.fillRoundRect((int) position.x, (int) position.y, (int) size.x, (int) size.y, 
+                (int) (size.x * 0.1), (int) (size.y * 0.1));
         }
     }
 

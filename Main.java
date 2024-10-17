@@ -1,20 +1,19 @@
 import java.awt.BorderLayout;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
 import items.ZoomScale;
+import items.Control.Controller;
 import items.Listas.ListasUI;
-import items.Filas.Fila;
-import items.Filas.FilaUI;
 
 public class Main{
 
-    static Window window;
-    static GraphicsPanel gPanel;
+    private static Window window;
+    private static GraphicsPanel gPanel;
+    private static Controller controller;
 
     public static void main(String[] args) {
         Input.createNewAction("Mouse 1", null, new int[]{MouseEvent.BUTTON1}, null);
@@ -24,19 +23,16 @@ public class Main{
         window = Window.getInstance("P1 - Simulador - Estrutura de Dados Nao Lineares");
 
         gPanel = GraphicsPanel.getInstance(800, 600, true, "src");
-
-        //window.add(new ListasUI(), BorderLayout.CENTER);
-        window.add(new FilaUI(), BorderLayout.CENTER);
+        
+        controller = new Controller();
+        window.add(controller, BorderLayout.CENTER);
         window.adjust();
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
         window.setVisible(true);
 
-        //GraphicsPanel.addGraphicItem(new Fila());
-
         // NAO REMOVER
         GraphicsPanel.addGraphicItem(new ZoomScale());
-
 
         gPanel.start();
 
