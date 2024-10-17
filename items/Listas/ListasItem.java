@@ -28,7 +28,7 @@ public class ListasItem extends GraphicsItem{
             position.x = (size.x * i) + SPACEMENT * (i + 1);
             g2.drawString("index: " + Integer.toString(i), (int) position.x, (int) (position.y - 2));
             g2.fillRect((int) position.x, (int) position.y, (int) size.x, (int) size.y);
-            g2.drawString(lista.get(i), (int) position.x, (int) (position.y + size.y + SPACEMENT));
+            g2.drawString("valor: " + lista.get(i), (int) position.x, (int) (position.y + size.y + SPACEMENT));
         }
     }
 

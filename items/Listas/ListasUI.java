@@ -2,13 +2,16 @@ package items.Listas;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
+import engine.util.Timer;
 
 public class ListasUI extends JPanel {
 
@@ -17,13 +20,22 @@ public class ListasUI extends JPanel {
     private static final int SPACEMENT = 10;
 
     JButton addButton = new JButton("Add");
+    JButton addAtButton = new JButton("Add At");
     JButton setButton = new JButton("Set");
     JButton removeButton = new JButton("Remove");
     JButton removeAtButton = new JButton("Remove At");
     JButton clearButton = new JButton("Clear");
+    JButton isEmptyButton = new JButton("Is Empty");
+    JButton getSizeButton = new JButton("Get Size");
+
+    private static final int TEXT_FONT_SIZE = 30;
+    JLabel textLabel = new JLabel();
+    
+    private static final double DISAPEAR_TIME = 5;
+    Timer disapearTimer = new Timer();
 
     /*
-     * //TODO
+     * //TODO NEVER GONNA GIVE YOU UP
      * addAt
      * isEmpty
      * getSize
@@ -33,9 +45,16 @@ public class ListasUI extends JPanel {
 
         GraphicsPanel.addGraphicItem(listasItem);
 
+        disapearTimer.oneTime = true;
+        disapearTimer.addListeners(() -> timeout());
+
         setPreferredSize(new Dimension(GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight()));
         setOpaque(false);
         setLayout(null);
+
+        add(textLabel);
+        textLabel.setFont(new Font("", Font.PLAIN, TEXT_FONT_SIZE));
+        textLabel.setBounds(5, 0, getPreferredSize().width, TEXT_FONT_SIZE);
 
         add(addButton);
         addButton.setSize(100, 50);
@@ -45,10 +64,18 @@ public class ListasUI extends JPanel {
         addButton.setFocusPainted(false);
         addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        add(addAtButton);
+        addAtButton.setSize(100, 50);
+        addAtButton.setLocation(GraphicsPanel.getPanelWidth() - addAtButton.getWidth() - SPACEMENT,
+            addButton.getY() + addButton.getHeight() + SPACEMENT);
+        addAtButton.addActionListener(l -> buttonsListener(l));
+        addAtButton.setFocusPainted(false);
+        addAtButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         add(setButton);
         setButton.setSize(100, 50);
         setButton.setLocation(GraphicsPanel.getPanelWidth() - setButton.getWidth() - SPACEMENT,
-            addButton.getY() + addButton.getHeight() + SPACEMENT);
+            addAtButton.getY() + addAtButton.getHeight() + SPACEMENT);
         setButton.addActionListener(l -> buttonsListener(l));
         setButton.setFocusPainted(false);
         setButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -77,18 +104,72 @@ public class ListasUI extends JPanel {
         clearButton.setFocusPainted(false);
         clearButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        add(isEmptyButton);
+        isEmptyButton.setSize(100, 50);
+        isEmptyButton.setLocation(GraphicsPanel.getPanelWidth() - isEmptyButton.getWidth() - SPACEMENT,
+            clearButton.getY() + clearButton.getHeight() + SPACEMENT);
+        isEmptyButton.addActionListener(l -> buttonsListener(l));
+        isEmptyButton.setFocusPainted(false);
+        isEmptyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        add(getSizeButton);
+        getSizeButton.setSize(100, 50);
+        getSizeButton.setLocation(GraphicsPanel.getPanelWidth() - getSizeButton.getWidth() - SPACEMENT,
+            isEmptyButton.getY() + isEmptyButton.getHeight() + SPACEMENT);
+        getSizeButton.addActionListener(l -> buttonsListener(l));
+        getSizeButton.setFocusPainted(false);
+        getSizeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
     }
 
     private void buttonsListener(ActionEvent l){
         if(l.getSource() == addButton){
             String string;
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
-            "Adicionar", JOptionPane.QUESTION_MESSAGE);
+            "Adicionar valor na lista", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
                 return;
             }
             listasItem.lista.add(string);
+        } else if(l.getSource() == addAtButton){
+            Object index;
+            try {
+                index = JOptionPane.showInputDialog(null, 
+                "Posição para inserir o valor: ", "Adicionar valor na lista", 
+                JOptionPane.QUESTION_MESSAGE);
+                if(index == null){
+                    return;
+                }
+                index = Integer.parseInt((String) index);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, 
+                "Voce deve entrar com um valor do tipo INTEIRO.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if((int) index < 0 || (int) index >= listasItem.lista.size() + 1){
+                JOptionPane.showMessageDialog(null, 
+                "Voce deve entrar com uma posição válida para lista.", "Erro", 
+                JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String string = JOptionPane.showInputDialog(null, 
+            "Valor a ser adicionado: ", "Adicionar valor na lista", 
+            JOptionPane.QUESTION_MESSAGE);
+            if (string != null) {
+                listasItem.lista.add((int) index, string);
+            }
+        } else if(l.getSource() == isEmptyButton){
+            if(listasItem.lista.isEmpty()){
+                textLabel.setText("A lista está vazia!");
+            } else{
+                textLabel.setText("A lista não está vazia!");
+            }
+            disapearTimer.start(DISAPEAR_TIME);
+        } else if(l.getSource() == getSizeButton){
+            textLabel.setText("O tamanho da lista é " + listasItem.lista.size() + ".");
+            disapearTimer.start(DISAPEAR_TIME);
         }
+
         if(listasItem.lista.isEmpty()){
             return;
         } else if(l.getSource() == setButton){
@@ -159,6 +240,10 @@ public class ListasUI extends JPanel {
                 listasItem.lista.clear();
             }
         }
+    }
+
+    private void timeout(){
+        textLabel.setText("");
     }
 
 }
