@@ -1,8 +1,15 @@
 package items.Control;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +31,17 @@ public class Selection extends JPanel {
     private static JLabel selectSimulatorLabel = new JLabel();
     private static JComboBox<String> simulatorsComboBox;
     private static JButton continueButton = new JButton("Continuar");
-    // private static JButton clickButton = new JButton("Clique aqui"); //TODO
+    private static JButton clickButton = new JButton("Não clique aqui!");
+
+    BufferedImage pilhaBufferedImg;
+    BufferedImage filaBufferedImg;
+    BufferedImage dequeBufferedImg;
+    BufferedImage listaBufferedImg;
+
+    Image pilhaImg;
+    Image filaImg;
+    Image dequeImg;
+    Image listaImg;
 
     private static String[] simulators = new String[4];
 
@@ -52,19 +69,37 @@ public class Selection extends JPanel {
         add(selectSimulatorLabel);
         selectSimulatorLabel.setFont(new Font("", Font.BOLD, 25));
         selectSimulatorLabel.setText(("Escolha um simulador: "));
-        selectSimulatorLabel.setBounds(5, titleLabel.getY() + titleLabel.getHeight() + 25, 
+        selectSimulatorLabel.setBounds(15, titleLabel.getY() + titleLabel.getHeight() + 25, 
             GraphicsPanel.getPanelWidth(), 25);
 
         simulatorsComboBox = new JComboBox<>(simulators);
         add(simulatorsComboBox);
-        simulatorsComboBox.setBounds(5, selectSimulatorLabel.getY() + selectSimulatorLabel.getHeight() + 15, 
-        100, 50);
+        simulatorsComboBox.setFont(new Font("", Font.PLAIN, 30));
+        simulatorsComboBox.setBounds(20, selectSimulatorLabel.getY() + selectSimulatorLabel.getHeight() + 15, 
+        150, 75);
 
         add(continueButton);
-        continueButton.setSize(100, 50);
+        continueButton.setFont(new Font("", Font.PLAIN, 25));
+        continueButton.setSize(150, 75);
         continueButton.setLocation(GraphicsPanel.getPanelWidth() - continueButton.getWidth() - 15, 
             GraphicsPanel.getPanelHeight() - continueButton.getHeight() - 15);
         continueButton.addActionListener(l -> actionListener(l));
+        continueButton.setFocusPainted(false);
+        continueButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        add(clickButton);
+        clickButton.setForeground(Color.RED);
+        clickButton.setSize(125, 50);
+        clickButton.setLocation(15, 
+            GraphicsPanel.getPanelHeight() - clickButton.getHeight() - 15);
+        clickButton.addActionListener(l -> actionListener(l));
+        clickButton.setFocusPainted(false);
+        clickButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JSeparator buttonSeparator = new JSeparator(JSeparator.HORIZONTAL);
+        buttonSeparator.setBounds(0, continueButton.getY() - 10, 
+            GraphicsPanel.getPanelWidth(), 1);
+        add(buttonSeparator);
 
     }
 
@@ -84,9 +119,36 @@ public class Selection extends JPanel {
                     Controller.changeToLista();
                     break;
             }
+        } else if(l.getSource() == clickButton){
+            try {
+                openWebpage(
+                    new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    public static boolean openWebpage(URI uri) {
+    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+        try {
+            desktop.browse(uri);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    return false;
+}
 
+public static boolean openWebpage(URL url) {
+    try {
+        return openWebpage(url.toURI());
+    } catch (URISyntaxException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 
 }
