@@ -1,18 +1,18 @@
 import java.awt.BorderLayout;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
 import items.ZoomScale;
-import items.Listas.ListasUI;
+import items.Control.Controller;
 
 public class Main{
 
-    static Window window;
-    static GraphicsPanel gPanel;
+    private static Window window;
+    private static GraphicsPanel gPanel;
+    private static Controller controller;
 
     public static void main(String[] args) {
         Input.createNewAction("Mouse 1", null, new int[]{MouseEvent.BUTTON1}, null);
@@ -23,7 +23,8 @@ public class Main{
 
         gPanel = GraphicsPanel.getInstance(800, 600, true, "src");
 
-        window.add(new ListasUI(), BorderLayout.CENTER);
+        controller = new Controller();
+        window.add(controller, BorderLayout.CENTER);
         window.adjust();
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
@@ -31,7 +32,6 @@ public class Main{
 
         // NAO REMOVER
         GraphicsPanel.addGraphicItem(new ZoomScale());
-
         gPanel.start();
 
     }
