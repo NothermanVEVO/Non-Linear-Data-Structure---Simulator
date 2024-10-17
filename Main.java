@@ -5,9 +5,7 @@ import java.awt.event.MouseEvent;
 import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
-import items.ZoomScale;
 import items.Control.Controller;
-import items.Listas.ListasUI;
 
 public class Main{
 
@@ -30,9 +28,6 @@ public class Main{
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
         window.setVisible(true);
-
-        // NAO REMOVER
-        GraphicsPanel.addGraphicItem(new ZoomScale());
 
         gPanel.start();
 

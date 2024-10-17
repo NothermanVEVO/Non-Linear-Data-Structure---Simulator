@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
+import items.Deques.DequesUI;
+import items.Filas.FilaUI;
 import items.Listas.ListasUI;
 
 public class Controller extends JPanel {
@@ -13,6 +15,11 @@ public class Controller extends JPanel {
     private static Selection selectionPanel = new Selection();
     private static JPanel currentSimulator;
 
+    /*
+     * //TODO PILHA
+     */
+    private static FilaUI fila = new FilaUI();
+    private static DequesUI deque = new DequesUI();
     private static ListasUI lista = new ListasUI();
 
     public Controller(){
@@ -30,11 +37,16 @@ public class Controller extends JPanel {
 
         /*
          * //TODO PILHA
-         * //TODO FILA
-         * //TODO DEQUE
          */
-        if(currentSimulator == lista){
+        if(currentSimulator == fila){
+            GraphicsPanel.removeGraphicItem(FilaUI.fila);
+            GraphicsPanel.removeGraphicItem(FilaUI.fila.zoomScale);
+        } else if(currentSimulator == deque){
+            GraphicsPanel.removeGraphicItem(DequesUI.dequesItem);
+            GraphicsPanel.removeGraphicItem(DequesUI.dequesItem.zoomScale);
+        } else if(currentSimulator == lista){
             GraphicsPanel.removeGraphicItem(ListasUI.listasItem);
+            GraphicsPanel.removeGraphicItem(ListasUI.listasItem.zoomScale);
         }
     }
 
@@ -47,17 +59,25 @@ public class Controller extends JPanel {
     }
 
     public static void changeToFila(){
-        currentSimulator = null;
+        currentSimulator = fila;
 
-        //TODO
+        instance.remove(selectionPanel);
+        instance.add(fila);
+
+        GraphicsPanel.addGraphicItem(FilaUI.fila);
+        GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScale);
 
         instance.repaint();
     }
 
     public static void changeToDeque(){
-        currentSimulator = null;
+        currentSimulator = deque;
 
-        //TODO
+        instance.remove(selectionPanel);
+        instance.add(deque);
+
+        GraphicsPanel.addGraphicItem(DequesUI.dequesItem);
+        GraphicsPanel.addGraphicItem(DequesUI.dequesItem.zoomScale);
 
         instance.repaint();
     }
@@ -69,6 +89,7 @@ public class Controller extends JPanel {
         instance.add(lista);
 
         GraphicsPanel.addGraphicItem(ListasUI.listasItem);
+        GraphicsPanel.addGraphicItem(ListasUI.listasItem.zoomScale);
 
         instance.repaint();
     }

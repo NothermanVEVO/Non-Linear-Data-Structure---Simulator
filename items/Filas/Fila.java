@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 
 import engine.abstractclasses.GraphicsItem;
 import engine.variables.Vector2;
+import items.ZoomScale;
+
 import java.util.LinkedList;
 
 public class Fila extends GraphicsItem{
@@ -13,6 +15,7 @@ public class Fila extends GraphicsItem{
     int index = 0;
     
     static LinkedList<String> fila = new LinkedList<>();
+    public ZoomScale zoomScale = new ZoomScale();
     Vector2 position = new Vector2();
 
 

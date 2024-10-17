@@ -36,10 +36,6 @@ public class ListasUI extends JPanel {
     private static final double DISAPEAR_TIME = 5;
     private Timer disapearTimer = new Timer();
 
-    /*
-     * //TODO NEVER GONNA GIVE YOU UP
-     */
-
     public ListasUI(){
 
         disapearTimer.oneTime = true;

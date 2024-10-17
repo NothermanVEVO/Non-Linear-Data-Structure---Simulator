@@ -7,10 +7,14 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -43,6 +47,13 @@ public class Selection extends JPanel {
     Image dequeImg;
     Image listaImg;
 
+    ImageIcon pilhaImgIcon;
+    ImageIcon filaImgIcon;
+    ImageIcon dequeImgIcon;
+    ImageIcon listaImgIcon;
+
+    JLabel currentImage = new JLabel();
+
     private static String[] simulators = new String[4];
 
     public Selection(){
@@ -51,6 +62,26 @@ public class Selection extends JPanel {
         simulators[1] = FILA;
         simulators[2] = DEQUE;
         simulators[3] = LISTA;
+
+        try {
+            pilhaBufferedImg = ImageIO.read(new File("assets\\pilha.jpg"));
+            pilhaImg = pilhaBufferedImg.getScaledInstance(300, 300, BufferedImage.SCALE_DEFAULT);
+            pilhaImgIcon = new ImageIcon(pilhaImg);
+
+            filaBufferedImg = ImageIO.read(new File("assets\\fila.jpeg"));
+            filaImg = filaBufferedImg.getScaledInstance(300, 300, BufferedImage.SCALE_DEFAULT);
+            filaImgIcon = new ImageIcon(filaImg);
+
+            dequeBufferedImg = ImageIO.read(new File("assets\\deque.jpg"));
+            dequeImg = dequeBufferedImg.getScaledInstance(300, 300, BufferedImage.SCALE_DEFAULT);
+            dequeImgIcon = new ImageIcon(dequeImg);
+
+            listaBufferedImg = ImageIO.read(new File("assets\\lista.jpeg"));
+            listaImg = listaBufferedImg.getScaledInstance(300, 300, BufferedImage.SCALE_DEFAULT);
+            listaImgIcon = new ImageIcon(listaImg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         setBounds(0, 0, GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight());
         setBackground(Color.WHITE);
@@ -77,6 +108,13 @@ public class Selection extends JPanel {
         simulatorsComboBox.setFont(new Font("", Font.PLAIN, 30));
         simulatorsComboBox.setBounds(20, selectSimulatorLabel.getY() + selectSimulatorLabel.getHeight() + 15, 
         150, 75);
+        simulatorsComboBox.addActionListener(l -> actionListener(l));
+
+        add(currentImage);
+        currentImage.setIcon(pilhaImgIcon);
+        currentImage.setBounds(15, simulatorsComboBox.getY() + simulatorsComboBox.getHeight() + 15, 
+            300, 300);
+        currentImage.setOpaque(false);
 
         add(continueButton);
         continueButton.setFont(new Font("", Font.PLAIN, 25));
@@ -125,6 +163,21 @@ public class Selection extends JPanel {
                     new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D"));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
+            }
+        } else if(l.getSource() == simulatorsComboBox){
+            switch ((String) simulatorsComboBox.getSelectedItem()) {
+                case PILHA:
+                    currentImage.setIcon(pilhaImgIcon);
+                    break;
+                case FILA:
+                    currentImage.setIcon(filaImgIcon);
+                    break;
+                case DEQUE:
+                    currentImage.setIcon(dequeImgIcon);
+                    break;
+                case LISTA:
+                    currentImage.setIcon(listaImgIcon);
+                    break;
             }
         }
     }

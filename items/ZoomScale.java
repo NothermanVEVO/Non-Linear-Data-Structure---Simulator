@@ -8,12 +8,12 @@ import engine.variables.Vector2;
 
 public class ZoomScale extends GraphicsItem{
 
-    private static Vector2 tlPosition = new Vector2();
-    private static Vector2 tlPositionWhenReleased = new Vector2();
+    private Vector2 tlPosition = new Vector2();
+    private Vector2 tlPositionWhenReleased = new Vector2();
 
-    private static Vector2 scale = new Vector2(1, 1);
-    private static Vector2 zoomSpeed = new Vector2(0.05, 0.05);
-    private static Vector2 maxZoom = new Vector2(3, 3);
+    private Vector2 scale = new Vector2(1, 1);
+    private Vector2 zoomSpeed = new Vector2(0.05, 0.05);
+    private Vector2 maxZoom = new Vector2(3, 3);
 
     public ZoomScale(){
         setZ(-100);
@@ -41,11 +41,11 @@ public class ZoomScale extends GraphicsItem{
         g2.scale(scale.x, scale.y);
     }
 
-    public static void resetTranslate(){
+    public void resetTranslate(){
         tlPosition = Vector2.ZERO;
     }
 
-    public static void resetZoom(){
+    public void resetZoom(){
         scale = new Vector2(1, 1);
     }
 

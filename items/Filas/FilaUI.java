@@ -1,7 +1,6 @@
 package items.Filas;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
@@ -12,11 +11,9 @@ import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
 import engine.util.Timer;
-import items.Listas.ListasItem;
+import items.Control.Controller;
 
 public class FilaUI extends JPanel{
-
-    Fila fila = new Fila();
 
     private static final int SPACEMENT = 10;
     
@@ -27,20 +24,22 @@ public class FilaUI extends JPanel{
     JButton getSizeButton = new JButton("Get Size");
     JButton getPeekButton = new JButton("Peek");
 
+    private JButton returnButton = new JButton("Return");
+
     private static final int TEXT_FONT_SIZE = 30;
     JLabel textLabel = new JLabel();
     
     private static final double DISAPEAR_TIME = 5;
     Timer disapearTimer = new Timer();
 
-    public FilaUI(){
-        GraphicsPanel.addGraphicItem(fila);
+    public static Fila fila = new Fila();
 
-        
+    public FilaUI(){
+
         disapearTimer.oneTime = true;
         disapearTimer.addListeners(() -> timeout());
 
-        setPreferredSize(new Dimension(GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight()));
+        setBounds(0, 0, GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight());
         setOpaque(false);
         setLayout(null);
 
@@ -59,7 +58,7 @@ public class FilaUI extends JPanel{
         add(dequeue);
         dequeue.setSize(100, 50);
         dequeue.setLocation(GraphicsPanel.getPanelWidth() - dequeue.getWidth() - SPACEMENT,
-dequeue.getY() + dequeue.getHeight() + SPACEMENT);
+            dequeue.getY() + dequeue.getHeight() + SPACEMENT);
         dequeue.addActionListener(l -> buttonsListener(l));
         dequeue.setFocusPainted(false);
         dequeue.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -94,6 +93,11 @@ dequeue.getY() + dequeue.getHeight() + SPACEMENT);
         getPeekButton.addActionListener(l -> buttonsListener(l));
         getPeekButton.setFocusPainted(false);
         getPeekButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        add(returnButton);
+        returnButton.setSize(100, 50);
+        returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
+        returnButton.addActionListener(l -> buttonsListener(l));
     }
 
     private void timeout() {
@@ -108,7 +112,7 @@ dequeue.getY() + dequeue.getHeight() + SPACEMENT);
             if(string == null || string.isBlank()){
                 return;
             }
-            fila.fila.add(string);
+            Fila.fila.add(string);
         } else if(l.getSource() == isEmptyButton){
             if(Fila.fila.isEmpty()){
                 textLabel.setText("A lista está vazia!");
@@ -119,21 +123,18 @@ dequeue.getY() + dequeue.getHeight() + SPACEMENT);
         } else if(l.getSource() == getSizeButton){
             textLabel.setText("O tamanho da lista é " + Fila.fila.size() + ".");
             disapearTimer.start(DISAPEAR_TIME);
-        } else if(l.getSource() == dequeue){
+        } else if(l.getSource() == dequeue && !Fila.fila.isEmpty()){
             Fila.fila.removeFirst();
-        } else if(l.getSource() == clearButton){
+        } else if(l.getSource() == clearButton && !Fila.fila.isEmpty()){
             int choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
             "Limpar lista", JOptionPane.YES_NO_OPTION);
             if(choice == JOptionPane.YES_OPTION){
                 Fila.fila.clear();
             }
-        } else if(l.getSource() == getPeekButton){
-            if(!Fila.fila.isEmpty()){
-                textLabel.setText("A valor no topo da lista é : "+ Fila.fila.getLast());
-            } else {
-                return;
-            }
-            
+        } else if(l.getSource() == getPeekButton && !Fila.fila.isEmpty()){
+            textLabel.setText("A valor no topo da lista é : "+ Fila.fila.getLast());
+        } else if(l.getSource() == returnButton){
+            Controller.returnToSelection();
         }
     }
 
