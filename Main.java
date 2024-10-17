@@ -6,8 +6,8 @@ import java.awt.event.MouseEvent;
 import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
-import items.Fila;
 import items.ZoomScale;
+import items.Listas.ListasUI;
 
 public class Main{
 
@@ -23,13 +23,15 @@ public class Main{
 
         gPanel = GraphicsPanel.getInstance(800, 600, true, "src");
 
+        window.add(new ListasUI(), BorderLayout.CENTER);
+        window.adjust();
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
         window.setVisible(true);
 
+        // NAO REMOVER
         GraphicsPanel.addGraphicItem(new ZoomScale());
-        GraphicsPanel.addGraphicItem(new Fila());
-        
+
         gPanel.start();
 
     }
