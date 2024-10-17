@@ -5,19 +5,24 @@ import java.awt.Graphics2D;
 
 import engine.abstractclasses.GraphicsItem;
 import engine.variables.Vector2;
+import java.util.LinkedList;
 
 public class Fila extends GraphicsItem{
 
-    Vector2 piniuim = new Vector2();
-
-
     
+    LinkedList<Integer> fila = new LinkedList<>();
+
+    int count = 0;
+
+    public Fila(){
+        fila.add(10);
+        fila.add(20);
+        fila.add(-10);
+    }
 
     @Override
     public void update(double deltaTime) {
-        piniuim.x++;
-        piniuim.y++;
-        
+       
         
     }
 
@@ -25,10 +30,20 @@ public class Fila extends GraphicsItem{
     public void draw(Graphics2D g2) {
         g2.setFont(new Font("", Font.PLAIN, 25));
         g2.drawString("Estruturas de dados: Fila", 10, 10);
-        g2.fillRoundRect(50, 50, 50,50, 50,50);
-        g2.fillRect((int)piniuim.x, (int)piniuim.y, 200, 100);
+        
+        for(Integer i : fila){
+            int y = 50*i;
+            int x = 50*i;
+            g2.fillRoundRect(x, y, 50, 50, 40,40);
+
+        }
+
+   
     }
 
-
+    public void adicionarFila( ){
+        fila.add(1);
+    }
+    
     
 }
