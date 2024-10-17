@@ -18,7 +18,6 @@ public class ZoomScale extends GraphicsItem{
     public ZoomScale(){
         setZ(-100);
     }
-    
 
     @Override
     public void update(double deltaTime) {
