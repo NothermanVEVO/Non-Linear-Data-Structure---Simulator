@@ -20,8 +20,8 @@ public class PilhasUI extends JPanel{
     private static final int SPACEMENT = 10;
 
     private JButton pushButton = new JButton("Push");
-    private JButton popButton = new JButton("Pop");
     private JButton peekButton = new JButton("Peek");
+    private JButton popButton = new JButton("Pop");
     private JButton clearButton = new JButton("Clear");
     private JButton isEmptyButton = new JButton("Is Empty");
     private JButton getSizeButton = new JButton("Get Size");
@@ -56,10 +56,18 @@ public class PilhasUI extends JPanel{
         pushButton.setFocusPainted(false);
         pushButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        add(peekButton);
+        peekButton.setSize(100, 50);
+        peekButton.setLocation(GraphicsPanel.getPanelWidth() - peekButton.getWidth() - SPACEMENT,
+            pushButton.getY() + pushButton.getHeight() + SPACEMENT);
+        peekButton.addActionListener(l -> buttonsListener(l));
+        peekButton.setFocusPainted(false);
+        peekButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         add(popButton);
         popButton.setSize(100, 50);
         popButton.setLocation(GraphicsPanel.getPanelWidth() - popButton.getWidth() - SPACEMENT,
-            pushButton.getY() + pushButton.getHeight() + SPACEMENT);
+            peekButton.getY() + peekButton.getHeight() + SPACEMENT);
         popButton.addActionListener(l -> buttonsListener(l));
         popButton.setFocusPainted(false);
         popButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -129,6 +137,12 @@ public class PilhasUI extends JPanel{
             }
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();
+        } else if(l.getSource() == peekButton){
+            if(!pilhaItem.pilha.isEmpty()){
+                textLabel.setText("O topo da pilha é " + pilhaItem.pilha.peek());
+            } else {
+                textLabel.setText("A pilha está vazia!");
+            }
         }
     }
 
