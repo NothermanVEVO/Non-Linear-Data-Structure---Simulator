@@ -72,18 +72,10 @@ public class PilhasUI extends JPanel{
         popButton.setFocusPainted(false);
         popButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        add(peekButton);
-        peekButton.setSize(100, 50);
-        peekButton.setLocation(GraphicsPanel.getPanelWidth() - peekButton.getWidth() - SPACEMENT,
-            popButton.getY() + popButton.getHeight() + SPACEMENT);
-        peekButton.addActionListener(l -> buttonsListener(l));
-        peekButton.setFocusPainted(false);
-        peekButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         add(clearButton);
         clearButton.setSize(100, 50);
         clearButton.setLocation(GraphicsPanel.getPanelWidth() - clearButton.getWidth() - SPACEMENT,
-            peekButton.getY() + peekButton.getHeight() + SPACEMENT);
+            popButton.getY() + popButton.getHeight() + SPACEMENT);
         clearButton.addActionListener(l -> buttonsListener(l));
         clearButton.setFocusPainted(false);
         clearButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -119,6 +111,8 @@ public class PilhasUI extends JPanel{
                 return;
             }
             pilhaItem.pilha.add(string);
+        } else if(l.getSource() == popButton && !pilhaItem.pilha.isEmpty()){
+            pilhaItem.pilha.pop();
         } else if(l.getSource() == peekButton && !pilhaItem.pilha.isEmpty()){
             textLabel.setText("O valor no topo da pilha é " + pilhaItem.pilha.peek());
             disapearTimer.start(DISAPEAR_TIME);
@@ -129,20 +123,17 @@ public class PilhasUI extends JPanel{
                 textLabel.setText("A pilha não está vazia!");
             }
             disapearTimer.start(DISAPEAR_TIME);
-        } else if(l.getSource() == clearButton){
+        } else if(l.getSource() == clearButton && !pilhaItem.pilha.isEmpty()){
             int choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
             "Limpar lista", JOptionPane.YES_NO_OPTION);
             if(choice == JOptionPane.YES_OPTION){
                 pilhaItem.pilha.clear();
             }
+        } else if(l.getSource() == getSizeButton){
+            textLabel.setText("O tamanho da pilha é " + pilhaItem.pilha.size());
+            disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();
-        } else if(l.getSource() == peekButton){
-            if(!pilhaItem.pilha.isEmpty()){
-                textLabel.setText("O topo da pilha é " + pilhaItem.pilha.peek());
-            } else {
-                textLabel.setText("A pilha está vazia!");
-            }
         }
     }
 
