@@ -17,7 +17,7 @@ public class PilhasItem extends GraphicsItem{
     public Stack<String> pilha = new Stack<>();
     public ZoomScale zoomScale = new ZoomScale();
     private Vector2 position = new Vector2();
-    private Vector2 size = new Vector2(100, 100);
+    private Vector2 size = new Vector2(100, 50);
     private static final int SPACEMENT = 10;
 
     PilhasItem(){
@@ -31,8 +31,9 @@ public class PilhasItem extends GraphicsItem{
     @Override
     public void draw(Graphics2D g2) {
         for (int i = 0; i < pilha.size(); i++) {
-            position.y = (size.y * i) + SPACEMENT * (i + 1);
-            g2.setColor(Color.ORANGE);
+            //position.y = (size.y * i) + SPACEMENT * (i + 1);
+            position.y = (size.y * (i+1));
+            // n to conseguindo criar um padrão pra pilha ser criada na vertical
             g2.drawString("index: " + Integer.toString(i), (int) position.x, (int) (position.y - 2));
             g2.drawString("valor: " + pilha.get(i), (int) position.x, (int) (position.y + size.y + SPACEMENT));
             g2.setColor(Color.DARK_GRAY);
