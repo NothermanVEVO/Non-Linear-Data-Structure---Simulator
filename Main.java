@@ -6,6 +6,8 @@ import engine.util.GraphicsPanel;
 import engine.util.Input;
 import engine.util.Window;
 import items.Control.Controller;
+import items.Filas.FilaUI;
+import items.Pilhas.PilhasUI;
 
 public class Main{
 
@@ -23,8 +25,9 @@ public class Main{
         gPanel = GraphicsPanel.getInstance(800, 600, true, "src");
         
         controller = new Controller();
-        window.add(controller, BorderLayout.CENTER);
-        window.adjust();
+
+        window.add(new PilhasUI(), BorderLayout.CENTER);
+        //window.add(controller, BorderLayout.CENTER);
         window.add(gPanel, BorderLayout.CENTER);
         window.adjust();
         window.setVisible(true);

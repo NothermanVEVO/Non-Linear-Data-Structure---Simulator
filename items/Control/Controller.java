@@ -9,6 +9,7 @@ import items.Deques.DequesUI;
 import items.Filas.Fila;
 import items.Filas.FilaUI;
 import items.Listas.ListasUI;
+import items.Pilhas.PilhasUI;
 
 public class Controller extends JPanel {
 
@@ -22,6 +23,7 @@ public class Controller extends JPanel {
     private static FilaUI fila = new FilaUI();
     private static DequesUI deque = new DequesUI();
     private static ListasUI lista = new ListasUI();
+    private static PilhasUI pilha = new PilhasUI();
 
     public Controller(){
         setOpaque(false);
@@ -52,13 +54,25 @@ public class Controller extends JPanel {
         } else if(currentSimulator == lista){
             GraphicsPanel.removeGraphicItem(ListasUI.listasItem);
             GraphicsPanel.removeGraphicItem(ListasUI.listasItem.zoomScale);
+        } else if(currentSimulator == pilha){
+            GraphicsPanel.removeGraphicItem(PilhasUI.pilhaItem);
+            GraphicsPanel.removeGraphicItem(PilhasUI.pilhaItem.zoomScale);
         }
     }
 
     public static void changeToPilha(){
-        currentSimulator = null;
+        currentSimulator = pilha;
 
-        //TODO
+
+        instance.remove(selectionPanel);
+        instance.add(deque);
+
+        GraphicsPanel.addGraphicItem(DequesUI.dequesItem);
+        GraphicsPanel.addGraphicItem(DequesUI.dequesItem.zoomScale);
+
+        instance.repaint();
+
+        
 
         instance.repaint();
     }
