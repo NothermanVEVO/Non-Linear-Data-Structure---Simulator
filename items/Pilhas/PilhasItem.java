@@ -25,7 +25,7 @@ public class PilhasItem extends GraphicsItem{
     }
 
     @Override
-    public void update(double deltaTime) {
+    public void update(double deltaTime){
     }
 
     @Override

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
 import engine.util.Timer;
+import items.Control.Controller;
 
 public class PilhasUI extends JPanel{
 
@@ -19,10 +20,7 @@ public class PilhasUI extends JPanel{
     private static final int SPACEMENT = 10;
 
     private JButton pushButton = new JButton("Add");
-    private JButton addAtButton = new JButton("Add At");
-    private JButton setButton = new JButton("Set");
     private JButton popButton = new JButton("Remove");
-    private JButton removeAtButton = new JButton("Remove At");
     private JButton clearButton = new JButton("Clear");
     private JButton isEmptyButton = new JButton("Is Empty");
     private JButton getSizeButton = new JButton("Get Size");
@@ -93,7 +91,6 @@ public class PilhasUI extends JPanel{
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
-
     }
 
     private void buttonsListener(ActionEvent l){
@@ -118,6 +115,8 @@ public class PilhasUI extends JPanel{
             if(choice == JOptionPane.YES_OPTION){
                 pilhaItem.pilha.clear();
             }
+        } else if(l.getSource() == returnButton){
+            Controller.returnToSelection();
         }
     }
 

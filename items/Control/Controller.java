@@ -65,10 +65,10 @@ public class Controller extends JPanel {
 
 
         instance.remove(selectionPanel);
-        instance.add(deque);
+        instance.add(pilha);
 
-        GraphicsPanel.addGraphicItem(DequesUI.dequesItem);
-        GraphicsPanel.addGraphicItem(DequesUI.dequesItem.zoomScale);
+        GraphicsPanel.addGraphicItem(PilhasUI.pilhaItem);
+        GraphicsPanel.addGraphicItem(PilhasUI.pilhaItem.zoomScale);
 
         instance.repaint();
 
