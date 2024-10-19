@@ -26,7 +26,6 @@ public class Main{
         
         controller = new Controller();
 
-        //window.add(new PilhasUI(), BorderLayout.CENTER);
         window.add(controller, BorderLayout.CENTER);
         window.adjust();
         window.add(gPanel, BorderLayout.CENTER);

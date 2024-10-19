@@ -19,8 +19,9 @@ public class PilhasUI extends JPanel{
 
     private static final int SPACEMENT = 10;
 
-    private JButton pushButton = new JButton("Add");
-    private JButton popButton = new JButton("Remove");
+    private JButton pushButton = new JButton("Push");
+    private JButton popButton = new JButton("Pop");
+    private JButton peekButton = new JButton("Peek");
     private JButton clearButton = new JButton("Clear");
     private JButton isEmptyButton = new JButton("Is Empty");
     private JButton getSizeButton = new JButton("Get Size");
@@ -63,10 +64,18 @@ public class PilhasUI extends JPanel{
         popButton.setFocusPainted(false);
         popButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        add(peekButton);
+        peekButton.setSize(100, 50);
+        peekButton.setLocation(GraphicsPanel.getPanelWidth() - peekButton.getWidth() - SPACEMENT,
+            popButton.getY() + popButton.getHeight() + SPACEMENT);
+        peekButton.addActionListener(l -> buttonsListener(l));
+        peekButton.setFocusPainted(false);
+        peekButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         add(clearButton);
         clearButton.setSize(100, 50);
         clearButton.setLocation(GraphicsPanel.getPanelWidth() - clearButton.getWidth() - SPACEMENT,
-            popButton.getY() + popButton.getHeight() + SPACEMENT);
+            peekButton.getY() + peekButton.getHeight() + SPACEMENT);
         clearButton.addActionListener(l -> buttonsListener(l));
         clearButton.setFocusPainted(false);
         clearButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -102,6 +111,9 @@ public class PilhasUI extends JPanel{
                 return;
             }
             pilhaItem.pilha.add(string);
+        } else if(l.getSource() == peekButton && !pilhaItem.pilha.isEmpty()){
+            textLabel.setText("O valor no topo da pilha é " + pilhaItem.pilha.peek());
+            disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == isEmptyButton){
             if(pilhaItem.pilha.isEmpty()){
                 textLabel.setText("A pilha está vazia!");
