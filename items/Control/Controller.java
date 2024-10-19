@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
 import items.Deques.DequesUI;
+import items.Filas.Fila;
 import items.Filas.FilaUI;
 import items.Listas.ListasUI;
 
@@ -40,7 +41,11 @@ public class Controller extends JPanel {
          */
         if(currentSimulator == fila){
             GraphicsPanel.removeGraphicItem(FilaUI.fila);
-            GraphicsPanel.removeGraphicItem(FilaUI.fila.zoomScale);
+            if(Selection.filaChoice.equals(Selection.LINEAR)){
+                GraphicsPanel.removeGraphicItem(FilaUI.fila.zoomScaleLinear);
+            } else if(Selection.filaChoice.equals(Selection.CIRCULAR)){
+                GraphicsPanel.removeGraphicItem(FilaUI.fila.zoomScaleCircular);
+            }
         } else if(currentSimulator == deque){
             GraphicsPanel.removeGraphicItem(DequesUI.dequesItem);
             GraphicsPanel.removeGraphicItem(DequesUI.dequesItem.zoomScale);
@@ -65,7 +70,14 @@ public class Controller extends JPanel {
         instance.add(fila);
 
         GraphicsPanel.addGraphicItem(FilaUI.fila);
-        GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScale);
+
+        if(Selection.filaChoice.equals(Selection.LINEAR)){
+            Fila.type = Selection.LINEAR;
+            GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScaleLinear);
+        } else if(Selection.filaChoice.equals(Selection.CIRCULAR)){
+            Fila.type = Selection.CIRCULAR;
+            GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScaleCircular);
+        }
 
         instance.repaint();
     }

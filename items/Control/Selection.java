@@ -25,10 +25,13 @@ import engine.util.GraphicsPanel;
 
 public class Selection extends JPanel {
 
-    private static final String PILHA = "Pilha";
-    private static final String FILA = "Fila";
-    private static final String DEQUE = "Deque";
-    private static final String LISTA = "Lista";
+    public static final String PILHA = "Pilha";
+    public static final String FILA = "Fila";
+    public static final String DEQUE = "Deque";
+    public static final String LISTA = "Lista";
+
+    public static final String LINEAR = "Linear";
+    public static final String CIRCULAR = "Circular";
 
     // INTERFACE
     private static JLabel titleLabel = new JLabel();
@@ -36,6 +39,7 @@ public class Selection extends JPanel {
     private static JComboBox<String> simulatorsComboBox;
     private static JButton continueButton = new JButton("Continuar");
     private static JButton clickButton = new JButton("Não clique aqui!");
+    private static JComboBox<String> filaComboBox;
 
     BufferedImage pilhaBufferedImg;
     BufferedImage filaBufferedImg;
@@ -55,6 +59,9 @@ public class Selection extends JPanel {
     JLabel currentImage = new JLabel();
 
     private static String[] simulators = new String[4];
+    private static String[] types = new String[2];
+
+    public static String filaChoice = LINEAR;
 
     public Selection(){
 
@@ -63,8 +70,11 @@ public class Selection extends JPanel {
         simulators[2] = DEQUE;
         simulators[3] = LISTA;
 
+        types[0] = LINEAR;
+        types[1] = CIRCULAR;
+
         try {
-            pilhaBufferedImg = ImageIO.read(new File("assets\\pilha.jpg"));
+            pilhaBufferedImg = ImageIO.read(new File("assets\\pilha.jpeg"));
             pilhaImg = pilhaBufferedImg.getScaledInstance(300, 300, BufferedImage.SCALE_DEFAULT);
             pilhaImgIcon = new ImageIcon(pilhaImg);
 
@@ -139,6 +149,15 @@ public class Selection extends JPanel {
             GraphicsPanel.getPanelWidth(), 1);
         add(buttonSeparator);
 
+        filaComboBox = new JComboBox<>(types);
+        add(filaComboBox);
+        filaComboBox.setFont(new Font("", Font.PLAIN, 25));
+        filaComboBox.setSize(125, 50);
+        filaComboBox.setLocation(simulatorsComboBox.getX() + simulatorsComboBox.getWidth() + 25, 
+            simulatorsComboBox.getY() + (simulatorsComboBox.getHeight() / 2) - (filaComboBox.getHeight() / 2));
+        filaComboBox.addActionListener(l -> actionListener(l));
+        filaComboBox.setVisible(false);
+
     }
 
     private void actionListener(ActionEvent l){
@@ -165,18 +184,29 @@ public class Selection extends JPanel {
                 e.printStackTrace();
             }
         } else if(l.getSource() == simulatorsComboBox){
+            filaComboBox.setVisible(false);
             switch ((String) simulatorsComboBox.getSelectedItem()) {
                 case PILHA:
                     currentImage.setIcon(pilhaImgIcon);
                     break;
                 case FILA:
                     currentImage.setIcon(filaImgIcon);
+                    filaComboBox.setVisible(true);
                     break;
                 case DEQUE:
                     currentImage.setIcon(dequeImgIcon);
                     break;
                 case LISTA:
                     currentImage.setIcon(listaImgIcon);
+                    break;
+            }
+        } else if(l.getSource() == filaComboBox){
+            switch ((String) filaComboBox.getSelectedItem()) {
+                case LINEAR:
+                    filaChoice = LINEAR;
+                    break;
+                case CIRCULAR:
+                    filaChoice = CIRCULAR;
                     break;
             }
         }

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import engine.util.GraphicsPanel;
 import engine.util.Timer;
 import items.Control.Controller;
+import items.Control.Selection;
 
 public class FilaUI extends JPanel{
 
@@ -112,27 +113,96 @@ public class FilaUI extends JPanel{
             if(string == null || string.isBlank()){
                 return;
             }
-            Fila.fila.add(string);
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    Fila.filaLinear.add(string);
+                    break;
+                case Selection.CIRCULAR:
+                    Fila.filaCircular.add(string);
+                    break;
+            }
         } else if(l.getSource() == isEmptyButton){
-            if(Fila.fila.isEmpty()){
-                textLabel.setText("A lista está vazia!");
-            } else{
-                textLabel.setText("A lista não está vazia!");
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    if(Fila.filaLinear.isEmpty()){
+                        textLabel.setText("A lista está vazia!");
+                    } else{
+                        textLabel.setText("A lista não está vazia!");
+                    }
+                    break;
+                case Selection.CIRCULAR:
+                    if(Fila.filaCircular.isEmpty()){
+                        textLabel.setText("A lista está vazia!");
+                    } else{
+                        textLabel.setText("A lista não está vazia!");
+                    }
+                    break;
             }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == getSizeButton){
-            textLabel.setText("O tamanho da lista é " + Fila.fila.size() + ".");
-            disapearTimer.start(DISAPEAR_TIME);
-        } else if(l.getSource() == dequeue && !Fila.fila.isEmpty()){
-            Fila.fila.removeFirst();
-        } else if(l.getSource() == clearButton && !Fila.fila.isEmpty()){
-            int choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
-            "Limpar lista", JOptionPane.YES_NO_OPTION);
-            if(choice == JOptionPane.YES_OPTION){
-                Fila.fila.clear();
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    textLabel.setText("O tamanho da lista é " + Fila.filaLinear.size() + ".");
+                    break;
+                case Selection.CIRCULAR:
+                    textLabel.setText("O tamanho da lista é " + Fila.filaCircular.size() + ".");
+                    break;
             }
-        } else if(l.getSource() == getPeekButton && !Fila.fila.isEmpty()){
-            textLabel.setText("A valor no topo da lista é : "+ Fila.fila.getLast());
+            disapearTimer.start(DISAPEAR_TIME);
+        } else if(l.getSource() == dequeue){
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    if(Fila.filaLinear.isEmpty()){
+                        return;
+                    }
+                    Fila.filaLinear.removeFirst();
+                    break;
+                case Selection.CIRCULAR:
+                    if(Fila.filaCircular.isEmpty()){
+                        return;
+                    }
+                    Fila.filaCircular.removeFirst();
+                    break;
+            }
+        } else if(l.getSource() == clearButton){
+            int choice;
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    if(Fila.filaLinear.isEmpty()){
+                        return;
+                    }
+                    choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
+                    "Limpar lista", JOptionPane.YES_NO_OPTION);
+                    if(choice == JOptionPane.YES_OPTION){
+                        Fila.filaLinear.clear();
+                    }
+                    break;
+                case Selection.CIRCULAR:
+                    if(Fila.filaCircular.isEmpty()){
+                        return;
+                    }
+                    choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
+                    "Limpar lista", JOptionPane.YES_NO_OPTION);
+                    if(choice == JOptionPane.YES_OPTION){
+                        Fila.filaCircular.clear();
+                    }
+                    break;
+            }
+        } else if(l.getSource() == getPeekButton){
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    if(Fila.filaLinear.isEmpty()){
+                        return;
+                    }
+                    textLabel.setText("A valor no topo da lista é : "+ Fila.filaLinear.getLast());
+                    break;
+                case Selection.CIRCULAR:
+                    if(Fila.filaCircular.isEmpty()){
+                        return;
+                    }
+                    textLabel.setText("A valor no topo da lista é : "+ Fila.filaCircular.getLast());
+                    break;
+            }
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();
         }

@@ -83,6 +83,7 @@ public class DequesUI extends JPanel {
         peekLastButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         add(removeFirstButton);
+        removeFirstButton.setFont(removeFirstButton.getFont().deriveFont((float) 10));
         removeFirstButton.setSize(100, 50);
         removeFirstButton.setLocation(GraphicsPanel.getPanelWidth() - removeFirstButton.getWidth() - SPACEMENT,
             peekLastButton.getY() + peekLastButton.getHeight() + SPACEMENT);
@@ -91,6 +92,7 @@ public class DequesUI extends JPanel {
         removeFirstButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         add(removeLastButton);
+        removeLastButton.setFont(removeLastButton.getFont().deriveFont((float) 10));
         removeLastButton.setSize(100, 50);
         removeLastButton.setLocation(GraphicsPanel.getPanelWidth() - removeLastButton.getWidth() - SPACEMENT,
             removeFirstButton.getY() + removeFirstButton.getHeight() + SPACEMENT);
