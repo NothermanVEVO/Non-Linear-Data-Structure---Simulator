@@ -20,7 +20,14 @@ import java.util.LinkedList;
 public class Fila extends GraphicsItem{
 
     public static LinkedList<String> filaLinear = new LinkedList<>();
+
+    // public static void enqueueLinear(String string){
+    //     filaLinear.add(string);
+    //     Color.getHSBColor((float) Math.random(), 1.0f, 1.0f);
+    // }
+
     public static LinkedList<String> filaCircular = new LinkedList<>();
+
     public ZoomScale zoomScaleLinear = new ZoomScale();
     public ZoomScale zoomScaleCircular = new ZoomScale();
     Vector2 position = new Vector2();
@@ -37,7 +44,6 @@ public class Fila extends GraphicsItem{
 
     private static final int FONT_SIZE = 25;
 
-    // private static BufferedImage arrowImgBuff;
     private static Image arrowImg;
     private static final int ARROW_IMG_WIDTH = 426 / 4;
     private static final int ARROW_IMG_HEIGHT = 213 / 2;
@@ -79,18 +85,17 @@ public class Fila extends GraphicsItem{
     }
 
     private void linearDraw(Graphics2D g2){
-
         switch (type) {
             case Selection.LINEAR:
                 for(int i = 0; i < filaLinear.size(); i++){
                     g2.setFont(new Font("", Font.PLAIN, 15));
                     position.x = (100*i) + 10*(i+1);
                     g2.setColor(Color.DARK_GRAY);
-                    // g2.drawString("Index: " + i, (int) position.x + 7, (int) position.y - 7);
+                    g2.drawString("Index: " + i, (int) position.x + 7, (int) position.y - 7);
                     g2.setColor(Color.gray);
-                    g2.fillRoundRect((int)position.x, (int) position.y, (int) (size.x), (int) (size.y), 40,40);
+                    g2.fillRoundRect((int) position.x, (int) position.y, (int) (size.x), (int) (size.y), 40,40);
                     g2.setColor(Color.DARK_GRAY);
-                    g2.drawString("Valor: " + filaLinear.get(i), (int) position.x, (int) position.y - 7);
+                    g2.drawString("Valor: " + filaLinear.get(i), (int) position.x + 7, (int) (position.y + size.y + 17));
 
                     Vector2 tempPosition = position;
                     position.x += ARROW_IMG_WIDTH * 0.5;
@@ -108,7 +113,7 @@ public class Fila extends GraphicsItem{
                     }
                     if(i == filaLinear.size() - 1){
                         g2.drawString("Fim", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 2.5), 
-                            (int) (position.y + ARROW_IMG_HEIGHT * 1.65));
+                            (int) (position.y + ARROW_IMG_HEIGHT * 3));
                     
                         g2.rotate(Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
                             (int) position.y + ARROW_IMG_HEIGHT / 2);
