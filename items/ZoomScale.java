@@ -33,6 +33,10 @@ public class ZoomScale extends GraphicsItem{
         if (Input.isActionPressed("Zoom Out") && scale.greaterOrEqual(zoomSpeed)) {
             scale = scale.sub(zoomSpeed);
         }
+        if (Input.isActionJustPressed("Reset Camera")) {
+            resetZoom();
+            resetTranslate();
+        }
     }
 
     @Override

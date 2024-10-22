@@ -128,6 +128,7 @@ public class DequesUI extends JPanel {
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
+        returnButton.setFocusPainted(false);
         returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
@@ -145,7 +146,7 @@ public class DequesUI extends JPanel {
             if(string == null || string.isBlank()){
                 return;
             }
-            dequesItem.deque.addFirst(string);
+            dequesItem.addFirstCard(string);
         } else if(l.getSource() == addLastButton){
             String string;
             if(dequesItem.deque.size() == DequesItem.tamanho){
@@ -158,7 +159,7 @@ public class DequesUI extends JPanel {
             if(string == null || string.isBlank()){
                 return;
             }
-            dequesItem.deque.addLast(string);
+            dequesItem.addLastCard(string);
         } else if(l.getSource() == isEmptyButton){
             if(dequesItem.deque.isEmpty()){
                 textLabel.setText("A lista está vazia!");
@@ -186,14 +187,14 @@ public class DequesUI extends JPanel {
             textLabel.setText("O último valor da lista é " + dequesItem.deque.peekLast() + ".");
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == removeFirstButton){
-            dequesItem.deque.removeFirst();
+            dequesItem.removeFirstCard();
         } else if(l.getSource() == removeLastButton){
-            dequesItem.deque.removeLast();
+            dequesItem.removeLastCard();
         } else if(l.getSource() == clearButton){
             int choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
             "Limpar lista", JOptionPane.YES_NO_OPTION);
             if(choice == JOptionPane.YES_OPTION){
-                dequesItem.deque.clear();
+                dequesItem.clearCards();
             }
         }
     }
