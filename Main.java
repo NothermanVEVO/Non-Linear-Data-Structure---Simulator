@@ -13,9 +13,6 @@ public class Main{
     private static GraphicsPanel gPanel;
     private static Controller controller;
 
-    //! ADICIONAR O KEY LISTENER DENTRO DA WINDOW, SE O USUARIO CLICAR EM ALGUM BOTAO, O PANEL PERDE O FOCO
-    //! E NAO RECEBE MAIS ENTRADA DO TECLADO
-
     public static void main(String[] args) {
         Input.createNewAction("Mouse 1", null, new int[]{MouseEvent.BUTTON1}, null);
         Input.createNewAction("Zoom In", null, null, new int[]{Input.MOUSE_WHEEL_UP});
