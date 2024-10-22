@@ -51,6 +51,16 @@ public class PilhasItem extends GraphicsItem{
         for (int i = 0; i < pilha.size(); i++) {
             int y = (int) (position.y - (size.y * (i + 1))) - (((SPACEMENT) * (i + 1)));
             int x = (int) (position.x - (size.x / 2));
+            if(i == pilha.size() - 1){
+                g2.setColor(Color.BLACK);
+                g2.drawRoundRect((int) x - (SPACEMENT / 2), (int) y - SPACEMENT / 2, (int) size.x + SPACEMENT, 
+                    (int) (size.y * pilha.size() + SPACEMENT * pilha.size()), 
+                    (int) (size.x * 0.1), (int) (size.y * 0.1));
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawRoundRect((int) x - (SPACEMENT / 3), (int) y - SPACEMENT / 3, (int) (size.x + SPACEMENT / 1.6), 
+                    (int) ((size.y * pilha.size() + SPACEMENT * pilha.size()) - SPACEMENT / 2.5),
+                    (int) (size.x * 0.1), (int) (size.y * 0.1));
+            }
             g2.setColor(Color.BLUE);
             g2.drawString("Index: " + Integer.toString(i), (int) x - (FONT_SIZE * 5), (int) y + FONT_SIZE);
             g2.setColor(Color.BLACK);

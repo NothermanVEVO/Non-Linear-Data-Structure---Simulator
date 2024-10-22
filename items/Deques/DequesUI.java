@@ -128,12 +128,18 @@ public class DequesUI extends JPanel {
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
+        returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
 
     private void buttonsListener(ActionEvent l){
         if(l.getSource() == addFirstButton){
             String string;
+            if(dequesItem.deque.size() == DequesItem.tamanho){
+                JOptionPane.showMessageDialog(null, "A lista já está cheia!", 
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
             "Adicionar valor na lista", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
@@ -142,6 +148,11 @@ public class DequesUI extends JPanel {
             dequesItem.deque.addFirst(string);
         } else if(l.getSource() == addLastButton){
             String string;
+            if(dequesItem.deque.size() == DequesItem.tamanho){
+                JOptionPane.showMessageDialog(null, "A lista já está cheia!", 
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
             "Adicionar valor na lista", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
@@ -156,7 +167,11 @@ public class DequesUI extends JPanel {
             }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == getSizeButton){
-            textLabel.setText("O tamanho da lista é " + dequesItem.deque.size() + ".");
+            if(DequesItem.tamanho >= 0){
+                textLabel.setText("O tamanho da lista é " + DequesItem.tamanho + ".");
+            } else{
+                textLabel.setText("O tamanho da lista é " + dequesItem.deque.size() + ".");
+            }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();

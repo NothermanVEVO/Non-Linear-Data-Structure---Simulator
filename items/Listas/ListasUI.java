@@ -36,13 +36,14 @@ public class ListasUI extends JPanel {
     private static final double DISAPEAR_TIME = 5;
     private Timer disapearTimer = new Timer();
 
+    public static int tamanho;
+
     public ListasUI(){
 
         disapearTimer.oneTime = true;
         disapearTimer.addListeners(() -> timeout());
 
         setBounds(0, 0, GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight());
-        // setPreferredSize(new Dimension(GraphicsPanel.getPanelWidth(), GraphicsPanel.getPanelHeight()));
         setOpaque(false);
         setLayout(null);
 
@@ -118,12 +119,18 @@ public class ListasUI extends JPanel {
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
+        returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
     }
 
     private void buttonsListener(ActionEvent l){
         if(l.getSource() == addButton){
             String string;
+            if(listasItem.lista.size() == ListasItem.tamanho){
+                JOptionPane.showMessageDialog(null, "A lista já está cheia!", 
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
             "Adicionar valor na lista", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
@@ -132,6 +139,11 @@ public class ListasUI extends JPanel {
             listasItem.lista.add(string);
         } else if(l.getSource() == addAtButton){
             Object index;
+            if(listasItem.lista.size() == ListasItem.tamanho){
+                JOptionPane.showMessageDialog(null, "A lista já está cheia!", 
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             try {
                 index = JOptionPane.showInputDialog(null, 
                 "Posição para inserir o valor: ", "Adicionar valor na lista", 
@@ -165,7 +177,11 @@ public class ListasUI extends JPanel {
             }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == getSizeButton){
-            textLabel.setText("O tamanho da lista é " + listasItem.lista.size() + ".");
+            if(ListasItem.tamanho >= 0){
+                textLabel.setText("O tamanho da lista é " + ListasItem.tamanho + ".");
+            } else{
+                textLabel.setText("O tamanho da lista é " + listasItem.lista.size() + ".");
+            }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();

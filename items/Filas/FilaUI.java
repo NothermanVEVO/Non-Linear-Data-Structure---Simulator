@@ -99,6 +99,7 @@ public class FilaUI extends JPanel{
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
+        returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void timeout() {
@@ -165,7 +166,7 @@ public class FilaUI extends JPanel{
                     }
                     break;
                 case Selection.CIRCULAR:
-                    if(Fila.tamanhoLinear >= 0){
+                    if(Fila.tamanhoCircular >= 0){
                         textLabel.setText("O tamanho da fila é " + Fila.tamanhoCircular + ".");
                     } else{
                         textLabel.setText("O tamanho da fila é " + Fila.filaCircular.size() + ".");

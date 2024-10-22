@@ -100,6 +100,7 @@ public class PilhasUI extends JPanel{
         returnButton.setSize(100, 50);
         returnButton.setLocation(SPACEMENT, GraphicsPanel.getPanelHeight() - returnButton.getHeight() - SPACEMENT);
         returnButton.addActionListener(l -> buttonsListener(l));
+        returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void buttonsListener(ActionEvent l){

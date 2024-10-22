@@ -51,7 +51,6 @@ public class Fila extends GraphicsItem{
 
     public Fila(){
         try {
-            // arrowImgBuff = ImageIO.read(new File("assets\\arrow.png"));
             arrowImg = ImageIO.read(new File("assets\\arrow.png"));
             arrowImg = arrowImg.getScaledInstance(ARROW_IMG_WIDTH, ARROW_IMG_HEIGHT, Image.SCALE_DEFAULT);
         } catch (IOException e) {
@@ -84,86 +83,53 @@ public class Fila extends GraphicsItem{
     }
 
     private void linearDraw(Graphics2D g2){
-        switch (type) {
-            case Selection.LINEAR:
-                for(int i = 0; i < filaLinear.size(); i++){
-                    g2.setFont(new Font("", Font.PLAIN, 15));
-                    position.x = (100*i) + 10*(i+1);
+            for(int i = 0; i < filaLinear.size(); i++){
+                g2.setFont(new Font("", Font.PLAIN, 15));
+                position.x = (100*i) + 10*(i+1);
+                if(i == 0){
+                    g2.setColor(Color.BLACK);
+                    g2.drawRoundRect((int) position.x - 5, (int) position.y - 5, 
+                        (int) (size.x * filaLinear.size()) + (filaLinear.size() * 10), (int) size.y + 10,
+                        (int) (size.x * 0.1), (int) (size.y * 0.1));
                     g2.setColor(Color.DARK_GRAY);
-                    g2.drawString("Index: " + i, (int) position.x + 7, (int) position.y - 7);
-                    g2.setColor(Color.gray);
-                    g2.fillRoundRect((int) position.x, (int) position.y, (int) (size.x), (int) (size.y), 40,40);
-                    g2.setColor(Color.DARK_GRAY);
-                    g2.drawString("Valor: " + filaLinear.get(i), (int) position.x + 7, (int) (position.y + size.y + 17));
-
-                    Vector2 tempPosition = position;
-                    position.x += ARROW_IMG_WIDTH * 0.5;
-                    g2.setFont(new Font("", Font.PLAIN, FONT_SIZE));
-                    if(i == 0){
-                        g2.drawString("Inicio", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5.5), 
-                            (int) (position.y - ARROW_IMG_HEIGHT * 1.3));
-                    
-                        g2.rotate(Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.2), 
-                            (int) (position.y + ARROW_IMG_WIDTH * 0.55), null);
-                        g2.rotate(-Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    if(i == filaLinear.size() - 1){
-                        g2.drawString("Fim", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 2.5), 
-                            (int) (position.y + ARROW_IMG_HEIGHT * 3));
-                    
-                        g2.rotate(Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.7), 
-                            (int) (position.y - ARROW_IMG_WIDTH * 0.55), null);
-                        g2.rotate(-Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    position = tempPosition;
+                    g2.drawRoundRect((int) position.x - 2, (int) position.y - 2, 
+                        (int) (size.x * filaLinear.size()) + (filaLinear.size() * 10) - 6, (int) size.y + 4,
+                        (int) (size.x * 0.1), (int) (size.y * 0.1));
                 }
-                break;
-            case Selection.CIRCULAR:
-                for(int i = 0; i < filaLinear.size(); i++){
-                    g2.setFont(new Font("", Font.PLAIN, 15));
-                    position.x = (100*i) + 10*(i+1);
-                    g2.setColor(Color.DARK_GRAY);
-                    // g2.drawString("Index: " + i, (int) position.x + 7, (int) position.y - 7);
-                    g2.setColor(Color.gray);
-                    g2.fillRoundRect((int)position.x, (int) position.y, (int) (size.x), (int) (size.y), 40,40);
-                    g2.setColor(Color.DARK_GRAY);
-                    g2.drawString("Valor: " + filaLinear.get(i), (int) position.x, (int) position.y - 7);
+                g2.setColor(Color.BLUE);
+                g2.drawString("Index: " + i, (int) position.x + 7, (int) position.y - 10);
+                g2.setColor(Color.gray);
+                g2.fillRoundRect((int) position.x, (int) position.y, (int) (size.x), (int) (size.y), 40,40);
+                g2.setColor(Color.BLACK);
+                g2.drawString("Valor: " + filaLinear.get(i), (int) position.x + 7, (int) (position.y + size.y + 20));
 
-                    Vector2 tempPosition = position;
-                    position.x += ARROW_IMG_WIDTH * 0.5;
-                    g2.setFont(new Font("", Font.PLAIN, FONT_SIZE));
-                    if(i == 0){
-                        g2.drawString("Inicio", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5.5), 
-                            (int) (position.y - ARROW_IMG_HEIGHT * 1.3));
-                    
-                        g2.rotate(Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.2), 
-                            (int) (position.y + ARROW_IMG_WIDTH * 0.55), null);
-                        g2.rotate(-Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    if(i == filaLinear.size() - 1){
-                        g2.drawString("Fim", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 2.5), 
-                            (int) (position.y + ARROW_IMG_HEIGHT * 1.65));
-                    
-                        g2.rotate(Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.7), 
-                            (int) (position.y - ARROW_IMG_WIDTH * 0.55), null);
-                        g2.rotate(-Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
-                            (int) position.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    position = tempPosition;
+                Vector2 tempPosition = position;
+                position.x += ARROW_IMG_WIDTH * 0.5;
+                g2.setFont(new Font("", Font.PLAIN, FONT_SIZE));
+                if(i == 0){
+                    g2.drawString("Inicio", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5.5), 
+                        (int) (position.y - ARROW_IMG_HEIGHT * 1.3));
+                
+                    g2.rotate(Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
+                        (int) position.y + ARROW_IMG_HEIGHT / 2);
+                    g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.2), 
+                        (int) (position.y + ARROW_IMG_WIDTH * 0.55), null);
+                    g2.rotate(-Math.toRadians(90), (int) position.x + ARROW_IMG_WIDTH / 2, 
+                        (int) position.y + ARROW_IMG_HEIGHT / 2);
                 }
-                break;
-        }
+                if(i == filaLinear.size() - 1){
+                    g2.drawString("Fim", (int) ((position.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 2.5), 
+                        (int) (position.y + ARROW_IMG_HEIGHT * 3));
+                
+                    g2.rotate(Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
+                        (int) position.y + ARROW_IMG_HEIGHT / 2);
+                    g2.drawImage(arrowImg, (int) (position.x - ARROW_IMG_HEIGHT * 1.7), 
+                        (int) (position.y - ARROW_IMG_WIDTH * 0.55), null);
+                    g2.rotate(-Math.toRadians(-90), (int) position.x + ARROW_IMG_WIDTH / 2, 
+                        (int) position.y + ARROW_IMG_HEIGHT / 2);
+                }
+                position = tempPosition;
+            }
 
     }
 
@@ -178,127 +144,65 @@ public class Fila extends GraphicsItem{
         double currentAngle = 0.0;
         final Vector2 startPosition = Vector2.RIGHT;
         Vector2 basePosition = new Vector2();
-    
         Vector2 textPosition = new Vector2();
 
-        switch (type) {
-            case Selection.LINEAR:
-                // Tem que fazer isso, caso contrario, em algum momento voce vai estar dividindo o "angle" por 0.
-                if(filaLinear.isEmpty()){
-                    return;
+        
+            // Tem que fazer isso, caso contrario, em algum momento voce vai estar dividindo o "angle" por 0.
+            if(filaCircular.isEmpty()){
+                return;
+            }
+            angle = 360.0 / filaCircular.size();
+            currentAngle = 0.0;
+            basePosition = new Vector2();
+        
+            textPosition = new Vector2();
+        
+            g2.setColor(Color.BLACK);
+            g2.setFont(new Font("", Font.BOLD, FONT_SIZE));
+        
+            for (int i = 0; i < filaCircular.size(); i++) {
+                basePosition = startPosition.rotated(Math.toRadians(currentAngle));
+            
+                Vector2 start = basePosition.mult(insideCircleRadius / 2);
+                start = start.sum(new Vector2(centerPosition.x, centerPosition.y));
+            
+                Vector2 end = basePosition.mult(externalCircleRadius / 2);
+                end = end.sum(new Vector2(centerPosition.x, centerPosition.y));
+            
+                g2.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y);
+            
+                basePosition = startPosition.rotated(Math.toRadians(currentAngle + (angle / 2)));
+                textPosition = basePosition.mult((insideCircleRadius / 2) + (circlesDifferenceRadius / 2));
+                textPosition = textPosition.sum(new Vector2(centerPosition.x, centerPosition.y));
+            
+                if(i == 0){
+                    g2.drawString("Inicio", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 3), 
+                        (int) (textPosition.y + ARROW_IMG_HEIGHT * 1.5));
+                
+                    g2.rotate(Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
+                        (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
+                    g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 0.2), 
+                        (int) (textPosition.y - ARROW_IMG_WIDTH * 0.5), null);
+                    g2.rotate(-Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
+                        (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
                 }
-                angle = 360.0 / filaLinear.size();
-                currentAngle = 0.0;
-                basePosition = new Vector2();
-            
-                textPosition = new Vector2();
-            
-                g2.setColor(Color.BLACK);
-                g2.setFont(new Font("", Font.BOLD, FONT_SIZE));
-            
-                for (int i = 0; i < filaLinear.size(); i++) {
-                    basePosition = startPosition.rotated(Math.toRadians(currentAngle));
+                if(i == filaCircular.size() - 1){
+                    g2.drawString("Fim", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5), 
+                        (int) (textPosition.y - ARROW_IMG_HEIGHT * 1.3));
                 
-                    Vector2 start = basePosition.mult(insideCircleRadius / 2);
-                    start = start.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    Vector2 end = basePosition.mult(externalCircleRadius / 2);
-                    end = end.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    g2.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y);
-                
-                    basePosition = startPosition.rotated(Math.toRadians(currentAngle + (angle / 2)));
-                    textPosition = basePosition.mult((insideCircleRadius / 2) + (circlesDifferenceRadius / 2));
-                    textPosition = textPosition.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    if(i == 0){
-                        g2.drawString("Inicio", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 3), 
-                            (int) (textPosition.y + ARROW_IMG_HEIGHT * 1.5));
-                    
-                        g2.rotate(Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 0.2), 
-                            (int) (textPosition.y - ARROW_IMG_WIDTH * 0.5), null);
-                        g2.rotate(-Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    if(i == filaLinear.size() - 1){
-                        g2.drawString("Fim", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5), 
-                            (int) (textPosition.y - ARROW_IMG_HEIGHT * 1.3));
-                    
-                        g2.rotate(Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 1.2), 
-                            (int) (textPosition.y + ARROW_IMG_WIDTH * 0.5), null);
-                        g2.rotate(-Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                
-                    g2.drawString(filaLinear.get(i), (int) textPosition.x - ((filaLinear.get(i).length() * FONT_SIZE / 2) / 2), 
-                        (int) textPosition.y + (FONT_SIZE / 2));
-                
-                    currentAngle += angle;
+                    g2.rotate(Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
+                        (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
+                    g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 1.2), 
+                        (int) (textPosition.y + ARROW_IMG_WIDTH * 0.5), null);
+                    g2.rotate(-Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
+                        (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
                 }
-                break;
-            case Selection.CIRCULAR:
-                // Tem que fazer isso, caso contrario, em algum momento voce vai estar dividindo o "angle" por 0.
-                if(filaCircular.isEmpty()){
-                    return;
-                }
-                angle = 360.0 / filaCircular.size();
-                currentAngle = 0.0;
-                basePosition = new Vector2();
             
-                textPosition = new Vector2();
+                g2.drawString(filaCircular.get(i), (int) textPosition.x - ((filaCircular.get(i).length() * FONT_SIZE / 2) / 2), 
+                    (int) textPosition.y + (FONT_SIZE / 2));
             
-                g2.setColor(Color.BLACK);
-                g2.setFont(new Font("", Font.BOLD, FONT_SIZE));
-            
-                for (int i = 0; i < filaCircular.size(); i++) {
-                    basePosition = startPosition.rotated(Math.toRadians(currentAngle));
-                
-                    Vector2 start = basePosition.mult(insideCircleRadius / 2);
-                    start = start.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    Vector2 end = basePosition.mult(externalCircleRadius / 2);
-                    end = end.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    g2.drawLine((int) start.x, (int) start.y, (int) end.x, (int) end.y);
-                
-                    basePosition = startPosition.rotated(Math.toRadians(currentAngle + (angle / 2)));
-                    textPosition = basePosition.mult((insideCircleRadius / 2) + (circlesDifferenceRadius / 2));
-                    textPosition = textPosition.sum(new Vector2(centerPosition.x, centerPosition.y));
-                
-                    if(i == 0){
-                        g2.drawString("Inicio", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 3) / 3), 
-                            (int) (textPosition.y + ARROW_IMG_HEIGHT * 1.5));
-                    
-                        g2.rotate(Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 0.2), 
-                            (int) (textPosition.y - ARROW_IMG_WIDTH * 0.5), null);
-                        g2.rotate(-Math.toRadians(-90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                    if(i == filaCircular.size() - 1){
-                        g2.drawString("Fim", (int) ((textPosition.x - ARROW_IMG_WIDTH / 2) + (FONT_SIZE * 6) / 5), 
-                            (int) (textPosition.y - ARROW_IMG_HEIGHT * 1.3));
-                    
-                        g2.rotate(Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                        g2.drawImage(arrowImg, (int) (textPosition.x - ARROW_IMG_HEIGHT * 1.2), 
-                            (int) (textPosition.y + ARROW_IMG_WIDTH * 0.5), null);
-                        g2.rotate(-Math.toRadians(90), (int) textPosition.x + ARROW_IMG_WIDTH / 2, 
-                            (int) textPosition.y + ARROW_IMG_HEIGHT / 2);
-                    }
-                
-                    g2.drawString(filaCircular.get(i), (int) textPosition.x - ((filaCircular.get(i).length() * FONT_SIZE / 2) / 2), 
-                        (int) textPosition.y + (FONT_SIZE / 2));
-                
-                    currentAngle += angle;
-                }
-                break;
-        }
+                currentAngle += angle;
+            }
     }
 
 }

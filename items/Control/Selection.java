@@ -204,18 +204,18 @@ public class Selection extends JPanel {
 
     private void actionListener(ActionEvent l){
         if(l.getSource() == continueButton){
-            if (!tamanhoTextField.getText().trim().matches("^[-+]?[0-9]+$")) {
-                JOptionPane.showMessageDialog(null, 
-                    "Voce deve entrar com um valor INTEIRO no tamanho!", "Erro", 
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            } else if(Integer.parseInt(tamanhoTextField.getText()) < 0){
-                JOptionPane.showMessageDialog(null, 
-                    "Voce deve entrar com um valor INTEIRO POSITIVO no tamanho!", "Erro", 
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
             if(tamanhoComboBox.getSelectedItem().equals(FIXO)){
+                if (!tamanhoTextField.getText().trim().matches("^[-+]?[0-9]+$")) {
+                    JOptionPane.showMessageDialog(null, 
+                        "Voce deve entrar com um valor INTEIRO no tamanho!", "Erro", 
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if(Integer.parseInt(tamanhoTextField.getText()) < 0){
+                    JOptionPane.showMessageDialog(null, 
+                        "Voce deve entrar com um valor INTEIRO POSITIVO no tamanho!", "Erro", 
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 sizeChoice = tamanhoTextField.getText();
             }
             switch ((String) simulatorsComboBox.getSelectedItem()) {

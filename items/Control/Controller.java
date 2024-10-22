@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import engine.util.GraphicsPanel;
+import items.Deques.DequesItem;
 import items.Deques.DequesUI;
 import items.Filas.Fila;
 import items.Filas.FilaUI;
+import items.Listas.ListasItem;
 import items.Listas.ListasUI;
 import items.Pilhas.PilhasItem;
 import items.Pilhas.PilhasUI;
@@ -18,9 +20,6 @@ public class Controller extends JPanel {
     private static Selection selectionPanel = new Selection();
     private static JPanel currentSimulator;
 
-    /*
-     * //TODO PILHA
-     */
     private static FilaUI fila = new FilaUI();
     private static DequesUI deque = new DequesUI();
     private static ListasUI lista = new ListasUI();
@@ -39,9 +38,6 @@ public class Controller extends JPanel {
         instance.add(selectionPanel);
         instance.repaint();
 
-        /*
-         * //TODO PILHA
-         */
         if(currentSimulator == fila){
             GraphicsPanel.removeGraphicItem(FilaUI.fila);
             if(Selection.filaChoice.equals(Selection.LINEAR)){
@@ -76,10 +72,6 @@ public class Controller extends JPanel {
         GraphicsPanel.addGraphicItem(PilhasUI.pilhaItem.zoomScale);
 
         instance.repaint();
-
-        
-
-        instance.repaint();
     }
 
     public static void changeToFila(){
@@ -112,6 +104,11 @@ public class Controller extends JPanel {
     public static void changeToDeque(){
         currentSimulator = deque;
 
+        DequesItem.tamanho = Integer.parseInt(Selection.sizeChoice.trim());
+        if(DequesItem.tamanho >= 0 && DequesUI.dequesItem.deque.size() > DequesItem.tamanho){
+            DequesUI.dequesItem.deque.clear();
+        }
+
         instance.remove(selectionPanel);
         instance.add(deque);
 
@@ -123,6 +120,11 @@ public class Controller extends JPanel {
 
     public static void changeToLista(){
         currentSimulator = lista;
+
+        ListasItem.tamanho = Integer.parseInt(Selection.sizeChoice.trim());
+        if(ListasItem.tamanho >= 0 && ListasUI.listasItem.lista.size() > ListasItem.tamanho){
+            ListasUI.listasItem.lista.clear();
+        }
 
         instance.remove(selectionPanel);
         instance.add(lista);

@@ -11,11 +11,13 @@ import items.ZoomScale;
 
 public class ListasItem extends GraphicsItem{
 
-    protected ArrayList<String> lista = new ArrayList<String>();
+    public ArrayList<String> lista = new ArrayList<String>();
     public ZoomScale zoomScale = new ZoomScale();
     private Vector2 position = new Vector2();
     private Vector2 size = new Vector2(100, 100);
     private static final int SPACEMENT = 10;
+
+    public static int tamanho;
 
     ListasItem(){
         position.y = (GraphicsPanel.getPanelHeight() / 2) - (size.y / 2);
