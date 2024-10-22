@@ -108,6 +108,22 @@ public class FilaUI extends JPanel{
     private void buttonsListener(ActionEvent l) {
         if(l.getSource() == enqueueButton){
             String string;
+            switch (Fila.type) {
+                case Selection.LINEAR:
+                    if(Fila.filaLinear.size() == Fila.tamanhoLinear){
+                        JOptionPane.showMessageDialog(null, "A fila linear já está cheia!", 
+                    "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                    }
+                    break;
+                case Selection.CIRCULAR:
+                    if(Fila.filaCircular.size() == Fila.tamanhoCircular){
+                        JOptionPane.showMessageDialog(null, "A fila circular já está cheia!", 
+                    "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                    }
+                    break;
+            }
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
             "Adicionar valor na lista", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
@@ -142,10 +158,18 @@ public class FilaUI extends JPanel{
         } else if(l.getSource() == getSizeButton){
             switch (Fila.type) {
                 case Selection.LINEAR:
-                    textLabel.setText("O tamanho da lista é " + Fila.filaLinear.size() + ".");
+                    if(Fila.tamanhoLinear >= 0){
+                        textLabel.setText("O tamanho da fila é " + Fila.tamanhoLinear + ".");
+                    } else{
+                        textLabel.setText("O tamanho da fila é " + Fila.filaLinear.size() + ".");
+                    }
                     break;
                 case Selection.CIRCULAR:
-                    textLabel.setText("O tamanho da lista é " + Fila.filaCircular.size() + ".");
+                    if(Fila.tamanhoLinear >= 0){
+                        textLabel.setText("O tamanho da fila é " + Fila.tamanhoCircular + ".");
+                    } else{
+                        textLabel.setText("O tamanho da fila é " + Fila.filaCircular.size() + ".");
+                    }
                     break;
             }
             disapearTimer.start(DISAPEAR_TIME);

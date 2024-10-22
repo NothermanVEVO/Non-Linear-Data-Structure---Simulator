@@ -20,13 +20,12 @@ import java.util.LinkedList;
 public class Fila extends GraphicsItem{
 
     public static LinkedList<String> filaLinear = new LinkedList<>();
+    public static int tamanhoLinear;
 
-    // public static void enqueueLinear(String string){
-    //     filaLinear.add(string);
-    //     Color.getHSBColor((float) Math.random(), 1.0f, 1.0f);
-    // }
+    // Color.getHSBColor((float) Math.random(), 1.0f, 1.0f);
 
     public static LinkedList<String> filaCircular = new LinkedList<>();
+    public static int tamanhoCircular;
 
     public ZoomScale zoomScaleLinear = new ZoomScale();
     public ZoomScale zoomScaleCircular = new ZoomScale();

@@ -105,32 +105,41 @@ public class PilhasUI extends JPanel{
     private void buttonsListener(ActionEvent l){
         if(l.getSource() == pushButton){
             String string;
+            if(PilhasItem.pilha.size() == PilhasItem.tamanho){
+                JOptionPane.showMessageDialog(null, "A pilha já está cheia!", 
+                "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             string = JOptionPane.showInputDialog(null, "Entre com o valor: ", 
             "Empilhar valor na pilha", JOptionPane.QUESTION_MESSAGE);
             if(string == null || string.isBlank()){
                 return;
             }
-            pilhaItem.pilha.add(string);
-        } else if(l.getSource() == popButton && !pilhaItem.pilha.isEmpty()){
-            pilhaItem.pilha.pop();
-        } else if(l.getSource() == peekButton && !pilhaItem.pilha.isEmpty()){
-            textLabel.setText("O valor no topo da pilha é " + pilhaItem.pilha.peek());
+            PilhasItem.pilha.add(string);
+        } else if(l.getSource() == popButton && !PilhasItem.pilha.isEmpty()){
+            PilhasItem.pilha.pop();
+        } else if(l.getSource() == peekButton && !PilhasItem.pilha.isEmpty()){
+            textLabel.setText("O valor no topo da pilha é " + PilhasItem.pilha.peek());
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == isEmptyButton){
-            if(pilhaItem.pilha.isEmpty()){
+            if(PilhasItem.pilha.isEmpty()){
                 textLabel.setText("A pilha está vazia!");
             } else{
                 textLabel.setText("A pilha não está vazia!");
             }
             disapearTimer.start(DISAPEAR_TIME);
-        } else if(l.getSource() == clearButton && !pilhaItem.pilha.isEmpty()){
+        } else if(l.getSource() == clearButton && !PilhasItem.pilha.isEmpty()){
             int choice = JOptionPane.showConfirmDialog(null, "Voce tem certeza disso?", 
             "Limpar lista", JOptionPane.YES_NO_OPTION);
             if(choice == JOptionPane.YES_OPTION){
-                pilhaItem.pilha.clear();
+                PilhasItem.pilha.clear();
             }
         } else if(l.getSource() == getSizeButton){
-            textLabel.setText("O tamanho da pilha é " + pilhaItem.pilha.size());
+            if(PilhasItem.tamanho >= 0){
+                textLabel.setText("O tamanho da pilha é " + PilhasItem.tamanho + ".");
+            } else{
+                textLabel.setText("O tamanho da pilha é " + PilhasItem.pilha.size() + ".");
+            }
             disapearTimer.start(DISAPEAR_TIME);
         } else if(l.getSource() == returnButton){
             Controller.returnToSelection();
@@ -140,5 +149,4 @@ public class PilhasUI extends JPanel{
     private void timeout(){
         textLabel.setText("");
     }
-    
 }

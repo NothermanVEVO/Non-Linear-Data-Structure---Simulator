@@ -16,11 +16,13 @@ import javax.imageio.ImageIO;
 
 public class PilhasItem extends GraphicsItem{
 
-    public Stack<String> pilha = new Stack<>();
+    public static Stack<String> pilha = new Stack<>();
     public ZoomScale zoomScale = new ZoomScale();
     private Vector2 position = new Vector2();
     private Vector2 size = new Vector2(100, 50);
     private static final int SPACEMENT = 20;
+
+    public static int tamanho;
 
     private static Image arrowImg;
     private static final int ARROW_IMG_WIDTH = 426 / 4;
@@ -56,10 +58,6 @@ public class PilhasItem extends GraphicsItem{
                  (int) y + (FONT_SIZE * 2) + 7);
             g2.fillRoundRect(x, y, (int) size.x, (int) size.y, (int) (size.x * 0.1), (int) (size.y * 0.1));
 
-            // if(i == 0){
-            //     g2.drawImage(arrowImg, x - 120, y - 25, null);
-            //     g2.drawString("Inicio", x - 110, y + 10);
-            // }
             if(i == pilha.size() - 1){
                 g2.setColor(Color.RED);
                 g2.rotate(Math.toRadians(-180), x + ARROW_IMG_WIDTH/2, y + ARROW_IMG_HEIGHT/2);

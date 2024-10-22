@@ -18,8 +18,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 
 import engine.util.GraphicsPanel;
 
@@ -33,13 +35,20 @@ public class Selection extends JPanel {
     public static final String LINEAR = "Linear";
     public static final String CIRCULAR = "Circular";
 
+    public static final String FIXO = "Fixo";
+    public static final String DINAMICO = "Dinamico";
+
     // INTERFACE
     private static JLabel titleLabel = new JLabel();
     private static JLabel selectSimulatorLabel = new JLabel();
     private static JComboBox<String> simulatorsComboBox;
     private static JButton continueButton = new JButton("Continuar");
     private static JButton clickButton = new JButton("Não clique aqui!");
+    private static JLabel tipoFilaLabel = new JLabel("Tipo:");
     private static JComboBox<String> filaComboBox;
+    private static JLabel tamanhoLabel = new JLabel("Tamanho:");
+    private static JComboBox<String> tamanhoComboBox;
+    private static JTextField tamanhoTextField = new JTextField();
 
     BufferedImage pilhaBufferedImg;
     BufferedImage filaBufferedImg;
@@ -60,8 +69,11 @@ public class Selection extends JPanel {
 
     private static String[] simulators = new String[4];
     private static String[] types = new String[2];
+    private static String[] sizes = new String[2];
 
     public static String filaChoice = LINEAR;
+
+    public static String sizeChoice = "0";
 
     public Selection(){
 
@@ -72,6 +84,9 @@ public class Selection extends JPanel {
 
         types[0] = LINEAR;
         types[1] = CIRCULAR;
+
+        sizes[0] = FIXO;
+        sizes[1] = DINAMICO;
 
         try {
             pilhaBufferedImg = ImageIO.read(new File("assets\\pilha.jpeg"));
@@ -149,19 +164,60 @@ public class Selection extends JPanel {
             GraphicsPanel.getPanelWidth(), 1);
         add(buttonSeparator);
 
+        tamanhoComboBox = new JComboBox<>(sizes);
+        add(tamanhoComboBox);
+        tamanhoComboBox.setFont(new Font("", Font.PLAIN, 25));
+        tamanhoComboBox.setSize(150, 50);
+        tamanhoComboBox.setLocation(simulatorsComboBox.getX() + simulatorsComboBox.getWidth() + 25, 
+            simulatorsComboBox.getY() + (simulatorsComboBox.getHeight() / 2) - (tamanhoComboBox.getHeight() / 2));
+        tamanhoComboBox.addActionListener(l -> actionListener(l));
+
+        add(tamanhoLabel);
+        tamanhoLabel.setFont(new Font("", Font.BOLD, 15));
+        tamanhoLabel.setSize(7 * 15, 20);
+        tamanhoLabel.setLocation(tamanhoComboBox.getX(), tamanhoComboBox.getY() - tamanhoLabel.getHeight());
+
+        add(tamanhoTextField);
+        tamanhoTextField.setText("0");
+        tamanhoTextField.setFont(new Font("", Font.PLAIN, 25));
+        tamanhoTextField.setSize(125, 50);
+        tamanhoTextField.setLocation(tamanhoComboBox.getX() + tamanhoComboBox.getWidth() + 25, 
+            tamanhoComboBox.getY() + (tamanhoComboBox.getHeight() / 2) - (tamanhoTextField.getHeight() / 2));
+        tamanhoTextField.setHorizontalAlignment(JTextField.CENTER);
+
         filaComboBox = new JComboBox<>(types);
         add(filaComboBox);
         filaComboBox.setFont(new Font("", Font.PLAIN, 25));
         filaComboBox.setSize(125, 50);
-        filaComboBox.setLocation(simulatorsComboBox.getX() + simulatorsComboBox.getWidth() + 25, 
-            simulatorsComboBox.getY() + (simulatorsComboBox.getHeight() / 2) - (filaComboBox.getHeight() / 2));
+        filaComboBox.setLocation(tamanhoTextField.getX() + tamanhoTextField.getWidth() + 25, 
+            tamanhoTextField.getY() + (tamanhoTextField.getHeight() / 2) - (filaComboBox.getHeight() / 2));
         filaComboBox.addActionListener(l -> actionListener(l));
         filaComboBox.setVisible(false);
+
+        add(tipoFilaLabel);
+        tipoFilaLabel.setFont(new Font("", Font.BOLD, 15));
+        tipoFilaLabel.setSize(7 * 15, 20);
+        tipoFilaLabel.setLocation(filaComboBox.getX(), filaComboBox.getY() - tipoFilaLabel.getHeight());
+        tipoFilaLabel.setVisible(false);
 
     }
 
     private void actionListener(ActionEvent l){
         if(l.getSource() == continueButton){
+            if (!tamanhoTextField.getText().trim().matches("^[-+]?[0-9]+$")) {
+                JOptionPane.showMessageDialog(null, 
+                    "Voce deve entrar com um valor INTEIRO no tamanho!", "Erro", 
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if(Integer.parseInt(tamanhoTextField.getText()) < 0){
+                JOptionPane.showMessageDialog(null, 
+                    "Voce deve entrar com um valor INTEIRO POSITIVO no tamanho!", "Erro", 
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(tamanhoComboBox.getSelectedItem().equals(FIXO)){
+                sizeChoice = tamanhoTextField.getText();
+            }
             switch ((String) simulatorsComboBox.getSelectedItem()) {
                 case PILHA:
                     Controller.changeToPilha();
@@ -185,6 +241,7 @@ public class Selection extends JPanel {
             }
         } else if(l.getSource() == simulatorsComboBox){
             filaComboBox.setVisible(false);
+            tipoFilaLabel.setVisible(false);
             switch ((String) simulatorsComboBox.getSelectedItem()) {
                 case PILHA:
                     currentImage.setIcon(pilhaImgIcon);
@@ -192,6 +249,7 @@ public class Selection extends JPanel {
                 case FILA:
                     currentImage.setIcon(filaImgIcon);
                     filaComboBox.setVisible(true);
+                    tipoFilaLabel.setVisible(true);
                     break;
                 case DEQUE:
                     currentImage.setIcon(dequeImgIcon);
@@ -207,6 +265,22 @@ public class Selection extends JPanel {
                     break;
                 case CIRCULAR:
                     filaChoice = CIRCULAR;
+                    break;
+            }
+        } else if(l.getSource() == tamanhoComboBox){
+            switch ((String) tamanhoComboBox.getSelectedItem()) {
+                case FIXO:
+                    tamanhoTextField.setVisible(true);
+                    filaComboBox.setLocation(tamanhoTextField.getX() + tamanhoTextField.getWidth() + 25, 
+                        tamanhoTextField.getY() + (tamanhoTextField.getHeight() / 2) - (filaComboBox.getHeight() / 2));
+                    tipoFilaLabel.setLocation(filaComboBox.getX(), filaComboBox.getY() - tipoFilaLabel.getHeight());
+                    break;
+                case DINAMICO:
+                    sizeChoice = "-1";
+                    tamanhoTextField.setVisible(false);
+                    filaComboBox.setLocation(tamanhoComboBox.getX() + tamanhoComboBox.getWidth() + 25, 
+                        tamanhoComboBox.getY() + (tamanhoComboBox.getHeight() / 2) - (filaComboBox.getHeight() / 2));
+                    tipoFilaLabel.setLocation(filaComboBox.getX(), filaComboBox.getY() - tipoFilaLabel.getHeight());
                     break;
             }
         }

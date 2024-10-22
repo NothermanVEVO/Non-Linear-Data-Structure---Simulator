@@ -9,6 +9,7 @@ import items.Deques.DequesUI;
 import items.Filas.Fila;
 import items.Filas.FilaUI;
 import items.Listas.ListasUI;
+import items.Pilhas.PilhasItem;
 import items.Pilhas.PilhasUI;
 
 public class Controller extends JPanel {
@@ -63,6 +64,10 @@ public class Controller extends JPanel {
     public static void changeToPilha(){
         currentSimulator = pilha;
 
+        PilhasItem.tamanho = Integer.parseInt(Selection.sizeChoice.trim());
+        if(PilhasItem.tamanho >= 0 && PilhasItem.pilha.size() > PilhasItem.tamanho){
+            PilhasItem.pilha.clear();
+        }
 
         instance.remove(selectionPanel);
         instance.add(pilha);
@@ -88,9 +93,17 @@ public class Controller extends JPanel {
         if(Selection.filaChoice.equals(Selection.LINEAR)){
             Fila.type = Selection.LINEAR;
             GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScaleLinear);
+            Fila.tamanhoLinear = Integer.parseInt(Selection.sizeChoice.trim());
+            if(Fila.tamanhoLinear >= 0 && Fila.filaLinear.size() > Fila.tamanhoLinear){
+                Fila.filaLinear.clear();
+            }
         } else if(Selection.filaChoice.equals(Selection.CIRCULAR)){
             Fila.type = Selection.CIRCULAR;
             GraphicsPanel.addGraphicItem(FilaUI.fila.zoomScaleCircular);
+            Fila.tamanhoCircular = Integer.parseInt(Selection.sizeChoice.trim());
+            if(Fila.tamanhoCircular >= 0 && Fila.filaCircular.size() > Fila.tamanhoCircular){
+                Fila.filaCircular.clear();
+            }
         }
 
         instance.repaint();
